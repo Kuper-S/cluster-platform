@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control K8S Testing Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='jquery-3.6.0.min.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="title">Control K8S Testing Platform</h1>
+            {% if not k8s_available %}
+            <p style="color: red;">Warning: Kubernetes is not available. Some functionalities will not work.</p>
+            {% endif %}
+        </header>
+        <main>
+            <section class="section">
+                <h2>Cluster Information</h2>
+                <div id="cluster-info" class="details-box"></div>
+            </section>
+
+            <section class="section">
+                <h2>Deploy Application</h2>
+                <form id="deploy-form">
+                    <label for="api-image">API Image:</label>
+                    <select id="api-image" name="api_image">
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+
+                    <label for="client-image">Client Image:</label>
+                    <select id="client-image" name="client_image">
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+
+                    <label for="namespace">Namespace:</label>
+                    <input type="text" id="namespace" name="namespace" placeholder="Enter namespace">
+
+                    <button type="button" class="button" onclick="deploy()">Deploy</button>
+                </form>
+            </section>
+
+            <section class="section">
+                <h2>Check Status</h2>
+                <form id="status-form">
+                    <label for="status-namespace">Namespace:</label>
+                    <input type="text" id="status-namespace" name="namespace" placeholder="Enter namespace">
+
+                    <button type="button" class="button" onclick="getStatus()">Check Status</button>
+                </form>
+                <div id="status-output" class="details-box"></div>
+            </section>
+
+            <section class="section">
+                <h2>Delete Application</h2>
+                <form id="delete-form">
+                    <label for="delete-namespace">Namespace:</label>
+                    <input type="text" id="delete-namespace" name="namespace" placeholder="Enter namespace">
+
+                    <button type="button" class="button delete" onclick="destroy()">Delete</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
